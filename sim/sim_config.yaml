@@ -1,0 +1,32 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2025 Atsushi ISHII
+#
+# This file is part of Vision-based modal identification and weight estimation of vehicles.
+#
+# Licensed under the MIT License. See the LICENSE file in the project root
+# for full license information.
+# -----------------------------------------------------------------------------
+
+vehicle:
+  mu: 1.0        # mass [t] (normalized or actual, as you define)
+  mf: 0.113      # front tire mass [t]
+  mr: 0.09       # rear tire mass [t]
+  inertia: 1.16        # moment of inertia [t*m^2]
+  lf: 0.8        # distance from CG to front tire [m]
+  length: 2.5    # wheelbase [m]
+
+  kf: 54.9       # front suspension stiffness
+  kr: 49.3       # rear suspension stiffness
+  ktf: 576.0     # front tire stiffness
+  ktr: 519.0     # rear tire stiffness
+
+  cf: 2.91       # front damping
+  cr: 3.49       # rear damping
+
+road:
+  fh: 300            # sampling frequency of road profile [Hz]
+  length_m: 800      # road length [m]
+  theta_deg: 0.0      # road slope [deg]
+  speed_kmh: 40      # vehicle speed [km/h]
+  measure_time_s: 10 # measurement time [s]
+  noise_std_m: 0.05  # std dev of random profile [m]
