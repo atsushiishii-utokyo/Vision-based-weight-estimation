@@ -256,6 +256,9 @@ def estimate_vehicle_weight(
     emac_mode_3 = emac_modes[:, 2]
     emac_avg = (emac_mode_1 + emac_mode_3) / 2.0
     emac_threshold = np.nanmean(emac_avg)
+    ## Set a minimum threshold for EMAC
+    if emac_threshold < 0.95:
+        emac_threshold = 0.95
 
     valid_idx = np.where(
         (emac_mode_1 > emac_threshold) & ~np.isnan(mass_inertia_matrix[:, 0])

@@ -34,30 +34,14 @@ Using SRIM and complex matrix formulation, vehicle body weight can be estimated.
 
 ![alt text](examples/plots/image-19.png)
 
-### ✔ Video Generation
-Create a tracking video from detection results:
-
-example:
-```python
-video_dir = 'Videos/1210_250kg.mov'
-output_path = generate_tracking_video(
-    video_path=video_dir,
-    responses_2d=response_dict,
-    fps=fs_tracking/2,
-)
-```
-
 ### ✔ Half-Car Simulation
 It can simulate the vehicle behaiors using half-car modeling.
+Please run [this notebook](notebooks/half_car_simulation.ipynb).
+
+In the notebook, you can simulate:
+
 - Vertical bounce + pitch dynamics are simulated from random road profile input excitation.
 - Weight estimation method is applied to the simulated vehicle responses,
-
-## 🔧 Installation
-Clone the repository
-
-```
-git clone https://github.com/atsushiishii-utokyo/Vision-based-weight-estimation.git
-```
 
 ## 📘 Notebooks Included
 #### 1. notebooks/half_car_simulation.ipynb
@@ -93,3 +77,77 @@ Includes:
 - Weight estimation
 
 - Video generation of point tracking
+
+## 🔧 Installation
+Clone the repository
+
+```
+git clone https://github.com/atsushiishii-utokyo/Vision-based-weight-estimation.git
+```
+
+## ▶️ How to Run (Command Line)
+
+This repository provides a command-line entry point via `main.py` to run **tracking → response extraction → weight estimation** on a real video.
+
+### 1️⃣ Basic usage
+Run the command below in the console.
+```bash
+python main.py path/to/video.mp4
+```
+
+Example:
+
+```bash
+python main.py videos/case-1.mov
+```
+
+This will:
+
+- Track vehicle body and wheels from the video
+- Extract vertical displacement responses
+- Perform SRIM-based modal identification
+- Estimate vehicle weight, inertia, and CG location
+- Plot SRIM diagnostics if enabled
+
+2️⃣ Optional arguments
+
+You can customize the behavior using CLI options:
+
+```bash
+python main.py path/to/video.mp4 \
+    --fs 120 \
+    --p 40 \
+    --no-subpixel \
+    --plot
+```
+
+| Argument        | Description                 | Default      |
+| --------------- | --------------------------- | ------------ |
+| `video`         | Path to input video         | **required** |
+| `--fs`          | Sampling frequency [Hz]. <br> Need to set the correct number. Use the exact frame rate as recording.     | `120`        |
+| `--p`           | SRIM block size             | `40`         |
+| `--no-subpixel` | Disable subpixel processing | disabled      |
+| `--plot`        | Show SRIM diagnostic plots  | disabled     |
+
+Example with plotting enabled:
+
+```
+python3 main.py videos/case-1.mov --plot
+```
+
+3️⃣ Output
+
+The script prints estimated values to the console, for example:
+```
+Estimated weight: 0.95 ton
+Estimated pitch inertia: 1.42
+Estimated CG ratio: 0.48
+Natural frequencies: [1.23, 2.87] Hz
+```
+
+If --plot is enabled, SRIM diagnostics such as:
+
+- natural frequencies
+- damping ratios
+- EMAC
+- mass / inertia consistency are displayed.
