@@ -242,12 +242,12 @@ def estimate_vehicle_weight(
         mass_inertia_matrix[row, 0:2] = np.array(
             [
                 estimation_row["estimated_weight"].real,
-                estimation_row["esimated_center_gravity"].real,
+                estimation_row["estimated_inertia"].real,
             ],
             dtype=float,
         )
         emac_modes[row, 0:4] = emac_four
-        cg_ratio_over_order[row] = estimation_row["estimated_inertia"].real
+        cg_ratio_over_order[row] = estimation_row["estimated_center_gravity"].real
 
     system_orders = np.arange(min_system_order, min_system_order + row_count, 1)
 
@@ -294,15 +294,13 @@ def estimate_vehicle_weight(
     total_weight = float(np.nanmean(m_selected))
     moment_inertia = float(np.nanmean(i_selected))
 
-    lf = l_g_selected * leng
-    lr = leng - lf
-
     estimation = {
         "total_weight": total_weight,
         "moment_inertia": moment_inertia,
-        "center_gravity": l_g_selected,
-        "front_axle": lf,
-        "rear_axle": lr,
+        "center_gravity_ratio": l_g_selected,
+        "center_gravity_from_front_axle": l_g_selected * leng,
+        "front_axle_weight": (1 - l_g_selected) * total_weight,
+        "rear_axle_weight": l_g_selected * total_weight,
         "natural_freq": [f1_est, f2_est],
     }
 
@@ -559,7 +557,7 @@ def estimate_mass_and_inertia_from_A(
     return {
         "valid": True,
         "estimated_weight": m_u,
-        "esimated_center_gravity": l_g,
+        "estimated_center_gravity": l_g,
         "estimated_inertia": i_g,
     }
 
