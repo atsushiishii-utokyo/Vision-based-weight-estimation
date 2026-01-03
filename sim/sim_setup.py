@@ -365,7 +365,7 @@ def compute_natural_frequencies(vehicle: VehicleParams) -> Dict[str, np.ndarray]
     m_2, c_2, k_2 = build_2dof_mck_matrices(vehicle)
     Minv_2 = np.linalg.inv(m_2)
 
-    lamda2_2dof, Phi_2 = linalg.eig(np.dot(Minv_2, k_2))
+    lamda2_2dof, _ = linalg.eig(np.dot(Minv_2, k_2))
     HCfreq_true_2dof = sorted(
         [math.sqrt(lamda) / (2 * math.pi) for lamda in lamda2_2dof]
     )
@@ -385,7 +385,7 @@ def compute_natural_frequencies(vehicle: VehicleParams) -> Dict[str, np.ndarray]
 
     # State-space A2 (2DOF)
     A2, B2 = build_state_space_matrices_2dof(m_2, c_2, k_2)
-    lamda_A2, Phi_A2 = linalg.eig(A2)
+    lamda_A2, _ = linalg.eig(A2)
     lamda_A2_abs = np.abs(lamda_A2)
     freq_A_2dof = (
         sorted(lamda_A2_abs / (2 * math.pi))[0],
