@@ -6,6 +6,9 @@ This repository implements a **vision-based** vehicle weight estimatation using:
 - SRIM-based modal identification
 - Weight estimation using complex matrix composition
 ---
+This work was published in journal of **Computer-Aided Civil and Infrastructure Engineering**
+
+📄 **Paper:** [Vision-based modal identification and weight estimation of vehicles](https://www.sciencedirect.com/science/article/pii/S1093968726018050)
 
 ## 🚀 Features
 
@@ -151,3 +154,8 @@ If --plot is enabled, SRIM diagnostics such as:
 - damping ratios
 - EMAC
 - mass / inertia consistency are displayed.
+
+📚 Citation
+
+If you use this repository, please cite the following paper:
+[Vision-based modal identification and weight estimation of vehicles](https://www.sciencedirect.com/science/article/pii/S1093968726018050)
